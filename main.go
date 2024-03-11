@@ -19,11 +19,10 @@ func main() {
 	if err != nil {
 		log.Fatal("не удалось подключиться к базе данных")
 	}
-
 	app := fiber.New()
 	
 	srv := handler.NewDefaultServer(gql.NewExecutableSchema(gql.Config{Resolvers: &gql.Resolver{}}))
-	app.Get("/playground", adaptor.HTTPHandlerFunc(playground.Handler("Graphql Playground", "/query")))
+	app.Get("/playground", adaptor.HTTPHandlerFunc(playground.Handler("Graphql Playground", "/query"))) //прикольная хуйня
 	app.All("/query", adaptor.HTTPHandler(srv))
 
 	app.Use(cors.New())

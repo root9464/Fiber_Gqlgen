@@ -2,20 +2,21 @@
 
 package model
 
-type Mutation struct {
+type CreateUserInput struct {
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }
 
-type NewUser struct {
-	ID       string `json:"id"`
-	Name     string `json:"name"`
-	Password string `json:"password"`
+type Mutation struct {
 }
 
 type Query struct {
 }
 
 type User struct {
-	ID       string `json:"id"`
-	Name     string `json:"name"`
-	Password string `json:"password"`
+	ID       string `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
+	Name     string    `json:"name"`
+	Email    string    `json:"email" gorm:"unique"`
+	Password string    `json:"password"`
 }

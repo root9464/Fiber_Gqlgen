@@ -9,24 +9,27 @@ import (
 	"fmt"
 	"root/database"
 	"root/graph/model"
+
+	"github.com/google/uuid"
 )
 
 // CreateUser is the resolver for the createUser field.
-func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) (*model.User, error) {
-	 user := &model.User{
-			ID:       input.ID,
-			Name:     input.Name,
-			Password: input.Password,
-	}
-	result := database.Db.DB.Create(user)
-	if result.Error != nil {
-		return nil, result.Error
-	}
-	return user, nil
+func (r *mutationResolver) CreateUser(ctx context.Context, input model.CreateUserInput) (*model.User, error) {
+		 user := &model.User{
+				ID:       uuid.New().String(),
+				Name:     input.Name,
+				Email:    input.Email,
+				Password: input.Password,
+		}
+		result := database.Db.DB.Create(user)
+		if result.Error != nil {
+			return nil, result.Error
+		}
+		return user, nil
 }
 
 // UpdateUser is the resolver for the updateUser field.
-func (r *mutationResolver) UpdateUser(ctx context.Context, id string, input model.NewUser) (*model.User, error) {
+func (r *mutationResolver) UpdateUser(ctx context.Context, id string, input model.CreateUserInput) (*model.User, error) {
 	panic(fmt.Errorf("not implemented: UpdateUser - updateUser"))
 }
 
